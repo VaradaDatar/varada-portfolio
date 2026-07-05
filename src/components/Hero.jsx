@@ -67,15 +67,9 @@ const Hero = () => {
     setVideoExists(false);
   };
 
-  useEffect(() => {
-    // Check if video file actually loaded after a short delay
-    const checkVideo = setTimeout(() => {
-      if (videoRef.current && videoRef.current.readyState === 0) {
-        setVideoExists(false);
-      }
-    }, 1200);
-    return () => clearTimeout(checkVideo);
-  }, []);
+  // We rely entirely on the native onError handler to detect missing files,
+  // rather than a timeout, because Vercel's CDN might take longer than 1.2s 
+  // to stream the video metadata on slower connections.
 
   // Autoplay removed as requested
 
